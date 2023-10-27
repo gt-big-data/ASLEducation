@@ -50,21 +50,43 @@ def load_inference_graph():
 
 # draw the detected bounding boxes on the images
 # You can modify this to also draw a label.
-def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np):
+def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np, padding_percent):
     for i in range(num_hands_detect):
         if (scores[i] > score_thresh):
             (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
                                           boxes[i][0] * im_height, boxes[i][2] * im_height)
-            p1 = (int(left), int(top))
-            p2 = (int(right), int(bottom))
+            p1 = (max(0, int(left) - int(left*padding_percent//2)), max(0, int(top) - int(top*padding_percent//2)))
+            p2 = (min(512, int(right) + int(right*padding_percent//2)), min(513, int(bottom) + int(bottom*padding_percent//2)))
+            
             cv2.rectangle(image_np, p1, p2, (77, 255, 9), 3, 1)
 
+def get_image_cropped(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np, padding_percent):
+    for i in range(num_hands_detect):
+        p1x = p2x = p1y = p2y = None
+        height = width = None
+        p1xbox = p2xbox = p1ybox = p2ybox = None
+        if (scores[i] > score_thresh):
+            (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
+                                          boxes[i][0] * im_height, boxes[i][2] * im_height)
+            p1x = max(0, int(left) - int(left*padding_percent//2))
+            p1y = max(0, int(top) - int(top*padding_percent//2))
+            p2x = min(512, int(right) + int(right*padding_percent//2))
+            p2y = min(513, int(bottom) + int(bottom*padding_percent//2))
+            
+            height = p2y - p1y
+            width = p2x - p1x
+            
+            p1xbox = int(left*padding_percent//2)
+            p2xbox = width - int(right*padding_percent//2)
+            p1ybox = int(top*padding_percent//2)
+            p2ybox = height - int(bottom*padding_percent//2)
+            
+        return (p1xbox, p1ybox, p2xbox, p2ybox), image_np[p1y:p2y, p1x:p2x]
 
 # Show fps value on image.
 def draw_fps_on_image(fps, image_np):
     cv2.putText(image_np, fps, (20, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.75, (77, 255, 9), 2)
-
 
 # Actual detection .. generate scores and bounding boxes given an image
 def detect_objects(image_np, detection_graph, sess):
