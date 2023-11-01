@@ -100,14 +100,14 @@ if __name__ == '__main__':
                                                       detection_graph, sess)
         
         # # draw bounding boxes on frame
-        detector_utils.draw_box_on_image(num_hands_detect, args.score_thresh,
-                                         scores, boxes, im_width, im_height,
-                                         image_np, 0.75)
+        # detector_utils.draw_box_on_image(num_hands_detect, args.score_thresh,
+        #                                  scores, boxes, im_width, im_height,
+        #                                  image_np, 0.75)
         (p1x, p1y, p2x, p2y), image_display = detector_utils.get_image_cropped(num_hands_detect, args.score_thresh,
                                          scores, boxes, im_width, im_height,
                                          image_np, 0.75)
         image_display = cv2.cvtColor(image_display, cv2.COLOR_RGB2BGR)
-        cv2.rectangle(image_display, (p1x, p1y), (p2x, p2y), (77, 255, 9), 3, 1)
+        # cv2.rectangle(image_display, (p1x, p1y), (p2x, p2y), (77, 255, 9), 3, 1)
 
         # Calculate Frames per second (FPS)
         num_frames += 1
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         if (len(boxes) >= 1):
             # cv2.drawContours(image_np, contours=(77, 255, 9))
             cv2.imshow('Single-Threaded Detection',
-                       image_np)
+                       image_display)
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()

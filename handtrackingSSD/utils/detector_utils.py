@@ -68,6 +68,7 @@ def get_image_cropped(num_hands_detect, score_thresh, scores, boxes, im_width, i
         if (scores[i] > score_thresh):
             (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
                                           boxes[i][0] * im_height, boxes[i][2] * im_height)
+
             p1x = max(0, int(left) - int(left*padding_percent//2))
             p1y = max(0, int(top) - int(top*padding_percent//2))
             p2x = min(512, int(right) + int(right*padding_percent//2))
