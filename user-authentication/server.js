@@ -4,17 +4,16 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const User = require('./models/user');
+const LocalStrategy = require('passport-local').Strategy;
 
 const app = express();
 app.use(express.json());
 
-// Initializes passport middleware which handles the authentication
-const initializePassport = require('./passport-config');
-initializePassport(
-    passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id),
-);
+const db_URI = process.env.DATABASE_URI;
+mongoose.connect(db_URI)
+    .then(() => console.log("connected to db"));
 
 // Functionality to support HTML pages to test the program
 app.set('view-engine', 'ejs');
@@ -30,8 +29,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Local Variable to store list of users, will be linked to external DB in actual project
-const users = [];
+passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // GET home route, must be logged in to view
 app.get('/', checkAuthenticated, (req, res) => {
@@ -49,23 +49,22 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 });
 
 // POST register route to create new user (password is  hashed using bcrypt)
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-        const salt = await bcrypt.genSalt()
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-
-        const user = { 
-            id: Date.now().toString(), // imitate an ID that a DB would generate
-            name: req.body.name, 
-            email: req.body.email, 
-            password: hashedPassword
-        };
-        users.push(user);
-
-        res.redirect('/login')
-    } catch {
-        res.redirect('/register')
-    }
+app.post('/register', checkNotAuthenticated, (req, res) => {
+    User.register(
+        new User({
+            name: req.body.name,
+            email: req.body.email
+        }), 
+        req.body.password,
+        (err, user) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/register');
+            } else {
+                res.redirect('/login');
+            }
+        }
+    );
 });
 
 // POST login route to login existing user, passport.js handles this using sessions
