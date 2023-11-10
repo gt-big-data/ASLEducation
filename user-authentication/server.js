@@ -11,7 +11,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 app.use(express.json());
 
-const db_URI = process.env.DATABASE_URI;
+const db_URI = process.env.MONGODB_URI;
 mongoose.connect(db_URI)
     .then(() => console.log("connected to db"));
 
