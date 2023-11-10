@@ -21,9 +21,7 @@ app.use(express.urlencoded({ extended: false}));
 
 app.use(flash());
 app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    secret: 'secret',
 }));
 
 app.use(passport.initialize());
