@@ -8,11 +8,11 @@ import dataset_gen
 
 detection_graph, sess = detector_utils.load_inference_graph()
 
-path_to_train_images = 'Image-Annotation-5/train/images'
+path_to_train_images = '../Image-Annotation-6/train/images'
 # path_to_train_labels = '/content/Image-Annotation-5/train/labels'
-path_to_test_images = 'Image-Annotation-5/test/images'
+path_to_test_images = '../Image-Annotation-6/test/images'
 # path_to_test_labels = '/content/Image-Annotation-5/test/labels'
-path_to_val_images = 'Image-Annotation-5/valid/images'
+path_to_val_images = '../Image-Annotation-6/valid/images'
 # path_to_val_labels = '/content/Image-Annotation-5/valid/labels'
 
 if __name__ == '__main__':
@@ -116,14 +116,14 @@ if __name__ == '__main__':
 
         if (len(boxes) >= 1):
             # cv2.drawContours(image_np, contours=(77, 255, 9))
-            cv2.imshow('Single-Threaded Detection',
-                       image_display)
+            # cv2.imshow('Single-Threaded Detection',
+            #            image_display)
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()
                 break
             
-            dataset_gen.saveImage(image_display, 'Image-Cropped/valid/images', image_path.split('/')[-1])
+            dataset_gen.saveImage(image_display, 'Image-Cropped/val/images', image_path.split('/')[-1])
         else:
             print("frames processed: ", num_frames, "elapsed time: ",
                   elapsed_time, "fps: ", str(int(fps)))

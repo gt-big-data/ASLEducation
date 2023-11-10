@@ -4,9 +4,8 @@ import os
 
 
 # rf = Roboflow(api_key="8O0d3piVDubPgWzft4ha")
-
 # project = rf.workspace("bdbi").project("image-annotation-lxsso")
-# dataset = project.version(5).download("yolov8")
+# dataset = project.version(6).download("yolov8")
 
 def generate_stream(folder):
     files = os.listdir(folder)
