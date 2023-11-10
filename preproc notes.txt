@@ -1,0 +1,5 @@
+Epoch 3 accuracy:
+
+bgr then canny (100, 200) = 0.7171
+rgb then canny (100, 200) = 0.7303
+canny (40, 70) ON rgb = 0.7211

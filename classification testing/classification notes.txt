@@ -1,0 +1,27 @@
+Model val accuracy with non-augmented data from SSD, batchsize 16, saving best after 8 epochs without val_acc improvement:
+dense layers followed by 0.5 dropout
+
+resnet101v2 with gap2d - 88%
+resnet101v2 with gap2d, dense128 - 88%
+resnet101v2 with gap2d, dense64 - 88%
+resnet101v2 with gap2d, dense32 - 88%
+resnet101v2 with flatten - 84.8%
+resnet101v2 with gap2d, dense512 - 84.5%
+resnet101v2 with gap2d, dense128, dense32 - 79.6%
+resnet101v2 with gap2d, dense26, dense26 - 78% (two 26 layers before the final 26 output)
+resnet101v2 with gap2d, dense64, dense32 - 71%
+	was much slower in accuracy improvement
+mobilenet with gap2d - 88%
+vgg16 with gap2d - 71%
+resnet101v2 with gap2d, dense5 - (was really really bad)
+
+
+
+Model val accuracy with data augmented from SSD and foreground segmented, batchsize 16, saving best after 8 epochs without val_acc improvement:
+resnet101v2 with gap2d - 96.7%
+	saved as resnet101v2_seg.h5
+resnet101v2 with gap2d with grayscale dataset - 96.0%
+mobilenet with gap2d - 96.2%
+	saved as mobilenet_seg.h5
+resnet50v2 with gap2d - 96.2%
+	
