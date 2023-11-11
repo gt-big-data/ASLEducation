@@ -2,6 +2,6 @@
 v: 0
 micros:
   - name: PLATFORM
-    src: ./
+    src: ./PLATFORM/
     engine: nodejs16
     primary: true
