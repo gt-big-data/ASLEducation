@@ -54,13 +54,28 @@ def load_inference_graph():
 
 # draw the detected bounding boxes on the images
 # You can modify this to also draw a label.
+def get_cropped_image(score_thresh, scores, boxes, im_width, im_height, image_np, padding_percent):
+    if (scores[0] > score_thresh):
+        (left, right, top, bottom) = (boxes[0][1] * im_width, boxes[0][3] * im_width,
+                                        boxes[0][0] * im_height, boxes[0][2] * im_height)
+        p1 = (max(0, int(left) - int(left*padding_percent//2)), max(0, int(top) - int(top*padding_percent//2)))
+        p2 = (min(im_width, int(right) + int(right*padding_percent//2)), min(im_height, int(bottom) + int(bottom*padding_percent//2)))
+        
+        return image_np[p1[0]:p2[0],p1[1]:p2[1]]
+    else:
+        return None
+
+
+
+# draw the detected bounding boxes on the images
+# You can modify this to also draw a label.
 def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np, padding_percent):
     for i in range(num_hands_detect):
         if (scores[i] > score_thresh):
             (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
                                           boxes[i][0] * im_height, boxes[i][2] * im_height)
             p1 = (max(0, int(left) - int(left*padding_percent//2)), max(0, int(top) - int(top*padding_percent//2)))
-            p2 = (min(512, int(right) + int(right*padding_percent//2)), min(513, int(bottom) + int(bottom*padding_percent//2)))
+            p2 = (min(im_width, int(right) + int(right*padding_percent//2)), min(im_height, int(bottom) + int(bottom*padding_percent//2)))
             
             cv2.rectangle(image_np, p1, p2, (77, 255, 9), 3, 1)
 
