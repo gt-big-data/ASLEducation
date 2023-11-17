@@ -13,6 +13,7 @@ sys.path.append("/Users/joshuadiao/ASLEducation/API_AWS/handtrackingSSD")
 
 import Image_Segmentation.foreground_segmentation
 from handtrackingSSD import detect_single_threaded
+import Upscaling.upscaler 
 
 labels = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J', 10: 'K', 11: 'L',
 12: 'M', 13: 'N', 14: 'O', 15: 'P', 16: 'Q', 17: 'R',18: 'S',19: 'T',20: 'U',21: 'V',22: 'W',23: 'X',24: 'Y',25: 'Z'}
@@ -34,11 +35,11 @@ def run():
         if img_file is not None:
             url = "http://54.234.222.205:5000/predict"
             img_detected =  detect_single_threaded.main(np.array(img.convert("RGB")).astype(np.uint8))
-            img_detected1 = Image.fromarray(img_detected)
-            img_segmented = Image_Segmentation.foreground_segmentation.main(img_detected1)
+            img_upscale = Image.fromarray(Upscaling.upscaler.upscale(img_detected))
+            img_segmented = Image_Segmentation.foreground_segmentation.main(img_upscale)
             st.image(img_detected, use_column_width=False)
-            st.image(img_segmented, use_column_width=False)
-            
+            st.image(img_upscale, use_column_width=False)
+            st.image(img_segmented, use_column_width=False) 
             # Convert the image (img_segmented) to bytes
             buffer = BytesIO()
             image = Image.fromarray(img_segmented)
