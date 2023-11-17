@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
+const multer = require('multer');
+const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local').Strategy;
@@ -12,8 +13,17 @@ const app = express();
 app.use(express.json());
 
 const db_URI = process.env.MONGODB_URI;
-mongoose.connect(db_URI)
-    .then(() => console.log("connected to db"));
+mongoose.connect(db_URI);
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname))
+    }
+});
+const upload = multer({ storage: storage });
 
 // Functionality to support HTML pages to test the program
 app.set('view-engine', 'ejs');
@@ -22,6 +32,8 @@ app.use(express.urlencoded({ extended: false}));
 app.use(flash());
 app.use(session({
     secret: 'secret',
+    resave: false,
+    saveUninitialized: false
 }));
 
 app.use(passport.initialize());
@@ -33,7 +45,11 @@ passport.deserializeUser(User.deserializeUser());
 
 // GET home route, must be logged in to view
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name});
+    res.render('index.ejs', { name: req.user.name, uploadedImage: false});
+});
+
+app.post('/', checkAuthenticated, upload.single('image'), (req, res) => {
+    res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
 
 // GET register route to view register form
