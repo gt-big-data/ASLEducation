@@ -39,9 +39,15 @@ def run():
             st.image(img_detected, use_column_width=False)
             st.image(img_segmented, use_column_width=False)
             
-            fp = TemporaryFile()
-            Image.fromarray(img_segmented).save(fp, "PNG")
-            form_data = {'file': fp}
+            # Convert the image (img_segmented) to bytes
+            buffer = BytesIO()
+            image = Image.fromarray(img_segmented)
+            image.save(buffer, format="PNG")
+            buffer.seek(0)
+
+            # Prepare the files dictionary with the file object
+            form_data = {'file': buffer}
+
             # cv2.imshow("Image", form_data['file'])
             resp = requests.post(url, files=form_data)
             resp_dict = resp.json()
