@@ -1,0 +1,116 @@
+[10/31 00:53:56 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from ./output/model_final.pth ...
+WARNING [10/31 00:53:57 d2.evaluation.coco_evaluation]: COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+WARNING [10/31 00:53:57 d2.data.datasets.coco]: 
+Category ids in annotations are not in [1, #categories]! We'll apply a mapping for you.
+
+[10/31 00:53:57 d2.data.datasets.coco]: Loaded 260 images in COCO format from /content/test/_annotations.coco.json
+[10/31 00:53:57 d2.data.build]: Distribution of instances among all 27 categories:
+|  category  | #instances   |  category  | #instances   |  category  | #instances   |
+|:----------:|:-------------|:----------:|:-------------|:----------:|:-------------|
+| hand-signs | 0            |     A      | 10           |     B      | 10           |
+|     C      | 10           |     D      | 10           |     E      | 10           |
+|     F      | 10           |     G      | 10           |     H      | 10           |
+|     I      | 10           |     J      | 10           |     K      | 10           |
+|     L      | 10           |     M      | 10           |     N      | 10           |
+|     O      | 10           |     P      | 10           |     Q      | 10           |
+|     R      | 10           |     S      | 10           |     T      | 10           |
+|     U      | 10           |     V      | 10           |     W      | 10           |
+|     X      | 10           |     Y      | 10           |     Z      | 10           |
+|            |              |            |              |            |              |
+|   total    | 260          |            |              |            |              |
+[10/31 00:53:57 d2.data.dataset_mapper]: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1333, sample_style='choice')]
+[10/31 00:53:57 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[10/31 00:53:57 d2.data.common]: Serializing 260 elements to byte tensors and concatenating them all ...
+[10/31 00:53:57 d2.data.common]: Serialized dataset takes 0.07 MiB
+[10/31 00:53:57 d2.evaluation.evaluator]: Start inference on 260 batches
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[10/31 00:54:00 d2.evaluation.evaluator]: Inference done 11/260. Dataloading: 0.0033 s/iter. Inference: 0.2536 s/iter. Eval: 0.0003 s/iter. Total: 0.2572 s/iter. ETA=0:01:04
+[10/31 00:54:05 d2.evaluation.evaluator]: Inference done 31/260. Dataloading: 0.0042 s/iter. Inference: 0.2527 s/iter. Eval: 0.0003 s/iter. Total: 0.2575 s/iter. ETA=0:00:58
+[10/31 00:54:10 d2.evaluation.evaluator]: Inference done 52/260. Dataloading: 0.0031 s/iter. Inference: 0.2475 s/iter. Eval: 0.0003 s/iter. Total: 0.2510 s/iter. ETA=0:00:52
+[10/31 00:54:15 d2.evaluation.evaluator]: Inference done 72/260. Dataloading: 0.0031 s/iter. Inference: 0.2508 s/iter. Eval: 0.0003 s/iter. Total: 0.2544 s/iter. ETA=0:00:47
+[10/31 00:54:21 d2.evaluation.evaluator]: Inference done 93/260. Dataloading: 0.0028 s/iter. Inference: 0.2497 s/iter. Eval: 0.0003 s/iter. Total: 0.2530 s/iter. ETA=0:00:42
+[10/31 00:54:26 d2.evaluation.evaluator]: Inference done 114/260. Dataloading: 0.0027 s/iter. Inference: 0.2487 s/iter. Eval: 0.0003 s/iter. Total: 0.2518 s/iter. ETA=0:00:36
+[10/31 00:54:31 d2.evaluation.evaluator]: Inference done 133/260. Dataloading: 0.0033 s/iter. Inference: 0.2504 s/iter. Eval: 0.0003 s/iter. Total: 0.2541 s/iter. ETA=0:00:32
+[10/31 00:54:36 d2.evaluation.evaluator]: Inference done 154/260. Dataloading: 0.0031 s/iter. Inference: 0.2490 s/iter. Eval: 0.0003 s/iter. Total: 0.2525 s/iter. ETA=0:00:26
+[10/31 00:54:41 d2.evaluation.evaluator]: Inference done 174/260. Dataloading: 0.0031 s/iter. Inference: 0.2489 s/iter. Eval: 0.0003 s/iter. Total: 0.2524 s/iter. ETA=0:00:21
+[10/31 00:54:46 d2.evaluation.evaluator]: Inference done 194/260. Dataloading: 0.0031 s/iter. Inference: 0.2489 s/iter. Eval: 0.0003 s/iter. Total: 0.2525 s/iter. ETA=0:00:16
+[10/31 00:54:51 d2.evaluation.evaluator]: Inference done 215/260. Dataloading: 0.0029 s/iter. Inference: 0.2479 s/iter. Eval: 0.0003 s/iter. Total: 0.2513 s/iter. ETA=0:00:11
+[10/31 00:54:56 d2.evaluation.evaluator]: Inference done 235/260. Dataloading: 0.0031 s/iter. Inference: 0.2484 s/iter. Eval: 0.0003 s/iter. Total: 0.2519 s/iter. ETA=0:00:06
+[10/31 00:55:01 d2.evaluation.evaluator]: Inference done 256/260. Dataloading: 0.0031 s/iter. Inference: 0.2474 s/iter. Eval: 0.0003 s/iter. Total: 0.2509 s/iter. ETA=0:00:01
+[10/31 00:55:02 d2.evaluation.evaluator]: Total inference time: 0:01:03.993980 (0.250957 s / iter per device, on 1 devices)
+[10/31 00:55:02 d2.evaluation.evaluator]: Total inference pure compute time: 0:01:03 (0.247237 s / iter per device, on 1 devices)
+[10/31 00:55:02 d2.evaluation.coco_evaluation]: Preparing results for COCO format ...
+[10/31 00:55:02 d2.evaluation.coco_evaluation]: Saving results to ./output/coco_instances_results.json
+[10/31 00:55:02 d2.evaluation.coco_evaluation]: Evaluating predictions with unofficial COCO API...
+Loading and preparing results...
+DONE (t=0.00s)
+creating index...
+index created!
+[10/31 00:55:02 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[10/31 00:55:03 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 0.08 seconds.
+[10/31 00:55:03 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[10/31 00:55:03 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 0.07 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.789
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.992
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.961
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.789
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.819
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.819
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.819
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.819
+[10/31 00:55:03 d2.evaluation.coco_evaluation]: Evaluation results for bbox: 
+|   AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:------:|:------:|:------:|:-----:|:-----:|:------:|
+| 78.861 | 99.229 | 96.144 |  nan  |  nan  | 78.861 |
+[10/31 00:55:03 d2.evaluation.coco_evaluation]: Some metrics cannot be computed and is shown as NaN.
+[10/31 00:55:03 d2.evaluation.coco_evaluation]: Per-category bbox AP: 
+| category   | AP     | category   | AP     | category   | AP     |
+|:-----------|:-------|:-----------|:-------|:-----------|:-------|
+| hand-signs | nan    | A          | 72.505 | B          | 84.122 |
+| C          | 80.360 | D          | 81.401 | E          | 87.314 |
+| F          | 90.248 | G          | 84.384 | H          | 71.491 |
+| I          | 74.182 | J          | 69.257 | K          | 75.970 |
+| L          | 91.023 | M          | 67.175 | N          | 83.896 |
+| O          | 71.334 | P          | 88.080 | Q          | 85.657 |
+| R          | 77.250 | S          | 80.901 | T          | 79.824 |
+| U          | 82.087 | V          | 80.751 | W          | 66.366 |
+| X          | 81.873 | Y          | 81.551 | Z          | 61.374 |
+OrderedDict([('bbox',
+              {'AP': 78.86068840400524,
+               'AP50': 99.22880749613422,
+               'AP75': 96.14426827298114,
+               'APs': nan,
+               'APm': nan,
+               'APl': 78.86068840400524,
+               'AP-hand-signs': nan,
+               'AP-A': 72.50542197076851,
+               'AP-B': 84.12211221122112,
+               'AP-C': 80.36003600360037,
+               'AP-D': 81.4009900990099,
+               'AP-E': 87.3135313531353,
+               'AP-F': 90.24752475247524,
+               'AP-G': 84.38393839383939,
+               'AP-H': 71.49064906490649,
+               'AP-I': 74.18198962753418,
+               'AP-J': 69.25742574257426,
+               'AP-K': 75.97029702970298,
+               'AP-L': 91.02310231023102,
+               'AP-M': 67.17546754675469,
+               'AP-N': 83.89603960396038,
+               'AP-O': 71.33427628477133,
+               'AP-P': 88.08030803080308,
+               'AP-Q': 85.65676567656766,
+               'AP-R': 77.25027502750275,
+               'AP-S': 80.9009900990099,
+               'AP-T': 79.82398239823982,
+               'AP-U': 82.08745874587459,
+               'AP-V': 80.75136085037076,
+               'AP-W': 66.36551155115512,
+               'AP-X': 81.87293729372936,
+               'AP-Y': 81.55115511551155,
+               'AP-Z': 61.37435172088638})])

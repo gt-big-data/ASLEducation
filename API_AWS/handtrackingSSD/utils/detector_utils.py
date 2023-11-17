@@ -1,5 +1,5 @@
 # Utilities for object detector.
-
+from utils import label_map_util
 import numpy as np
 import sys
 import tensorflow as tf
@@ -7,7 +7,6 @@ import os
 from threading import Thread
 from datetime import datetime
 import cv2
-from utils import label_map_util
 from collections import defaultdict
 
 
@@ -17,7 +16,7 @@ sys.path.append("..")
 # score threshold for showing bounding boxes.
 _score_thresh = 0.27
 
-parent_dir = 'handtrackingSSD/'
+parent_dir = 'API_AWS/handtrackingSSD/'
 MODEL_NAME = 'hand_inference_graph'
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_CKPT = parent_dir + MODEL_NAME + '/frozen_inference_graph.pb'
@@ -90,8 +89,8 @@ def get_image_cropped(num_hands_detect, score_thresh, scores, boxes, im_width, i
 
             p1x = max(0, int(left) - int(left*padding_percent//2))
             p1y = max(0, int(top) - int(top*padding_percent//2))
-            p2x = min(512, int(right) + int(right*padding_percent//2))
-            p2y = min(513, int(bottom) + int(bottom*padding_percent//2))
+            p2x = min(im_width, int(right) + int(right*padding_percent//2))
+            p2y = min(im_height, int(bottom) + int(bottom*padding_percent//2))
             
             height = p2y - p1y
             width = p2x - p1x
@@ -123,13 +122,16 @@ def detect_objects(image_np, detection_graph, sess):
         'detection_classes:0')
     num_detections = detection_graph.get_tensor_by_name(
         'num_detections:0')
+    print("detobj - 111")
 
     image_np_expanded = np.expand_dims(image_np, axis=0)
+    print("detobj - 222")
 
     (boxes, scores, classes, num) = sess.run(
         [detection_boxes, detection_scores,
             detection_classes, num_detections],
         feed_dict={image_tensor: image_np_expanded})
+    print("detobj - 333")
     return np.squeeze(boxes), np.squeeze(scores)
 
 
