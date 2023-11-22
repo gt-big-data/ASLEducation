@@ -2,7 +2,7 @@ from urllib.request import urlretrieve
 from PIL import Image
 from matplotlib import pyplot as plt
 import os
-import cv2
+
 import numpy as np
 import torch
 from torchvision import transforms
