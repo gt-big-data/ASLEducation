@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Handtrack.js : A library for prototyping realtime handtracking in the browser. </title>
+  <link rel="stylesheet" href="https://unpkg.com/carbon-components@latest/css/carbon-components.css" />
+  <link rel="stylesheet" href="css/track.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+  
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  
+    .info-text {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  
+    .button-group {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+  
+    .button-group button {
+      margin: 0 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007acc;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+  
+    .button-group button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  
+    .button-group button:hover {
+      background-color: #005580;
+    }
+  
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+  
+    .canvasbox {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 10px;
+      max-width: 100%;
+    }
+  
+    video {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  
+    img {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  
+    .updatenote {
+      margin-top: 10px;
+      color: #777;
+    }
+  </style>
+  
+</head>
+
+<body class="bx--body p20">
+  <!-- <img id="img" src="hand.jpg"/>  -->
+  <div class="p20">
+    Handtrack.js allows you prototype handtracking interactions in the browser in 3 lines of code.
+  </div>
+  <div class="mb10">
+    <button  id="trackbutton" class="bx--btn bx--btn--secondary" type="button" disabled>
+      Toggle Video
+    </button>
+    <button id="nextimagebutton" class="mt10 bx--btn bx--btn--secondary" type="button" disabled>
+      Next Image
+    </button>
+    <div id="updatenote" class="updatenote mt10"> loading model ..</div>
+  </div>
+  <video class="videobox canvasbox" autoplay="autoplay" id="myvideo"></video>
+  <canvas id="canvas" class="border canvasbox"></canvas>
+  <div class="mt10">
+    <img src="images/1.jpg" class="canvasbox  hidden" id="handimage" alt="">
+
+  </div>
+
+  <script src="https://unpkg.com/carbon-components@latest/scripts/carbon-components.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/handtrackjs@0.0.13/dist/handtrack.min.js"> </script> -->
+  <script src="lib/handtrack.min.js"> </script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

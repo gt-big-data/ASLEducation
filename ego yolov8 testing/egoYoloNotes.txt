@@ -1,0 +1,4 @@
+map 50-95 scores:
+
+batch16 and worker8
+	epoch 15: 0.772
