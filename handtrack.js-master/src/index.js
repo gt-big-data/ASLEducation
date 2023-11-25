@@ -33,7 +33,7 @@ const defaultParams = {
   maxNumBoxes: 20,
   iouThreshold: 0.2,
   scoreThreshold: 0.6,
-  modelType: "ssd320fpnlite",
+  modelType: "ssd640fpnlite",
   modelSize: "large",
   bboxLineWidth: "2",
   fontSize: 17,
@@ -402,7 +402,7 @@ export class ObjectDetection {
     context.fillStyle = "#374151";
     context.font = "bold " + this.modelParams.fontSize + "px Arial";
     // context.fillText("FPS: " + this.fps, 18, this.modelParams.fontSize + 12);
-    context.fillText("FPS: " + predictedLetter, 18, this.modelParams.fontSize + 12);
+    context.fillText("Letter: " + predictedLetter, 28, this.modelParams.fontSize + 12);
   }
 
   dispose() {
