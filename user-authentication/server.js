@@ -3,7 +3,7 @@ const express = require('express');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const multer = require('multer');
+// const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/user');
@@ -18,8 +18,8 @@ app.use(express.json());
 const db_URI = process.env.MONGODB_URI;
 mongoose.connect(db_URI);
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
 // Functionality to support HTML pages to test the program
 app.set('view-engine', 'ejs');
@@ -39,26 +39,32 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(express.static(path.join(__dirname, './frontend/demo')));
 
 // GET home route, must be logged in to view
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name, uploadedImage: false});
+    res.sendFile(path.join(__dirname, './frontend/demo', 'index.html'));
+    // res.render('index.ejs', { name: req.user.name, uploadedImage: false});
 });
 
 // POST home route to save an user-uploaded image
-app.post('/', checkAuthenticated, upload.single('image'), async (req, res) => {
-    const formData = new FormData();
-    formData.append('file', req.file.buffer, {
-        filename: req.file.originalname,
-        contentType: req.file.mimetype
-    });
-    const response = await fetch('http://54.163.41.212:5000/predict', {
-        method: 'POST',
-        body: formData,
-    });
-    const data = await response.json();
-    console.log(data.prediction);
-    res.render('index.ejs', { name: req.user.name, uploadedImage: true});
+app.post('/', async (req, res) => {
+    console.log(req.body);
+    // const formData = new FormData();
+    // // formData.append('file', req.file.buffer, {
+    // //     filename: req.file.originalname,
+    // //     contentType: req.file.mimetype
+    // // });
+
+    // formData.append('file', req.body.blob)
+
+    // const response = await fetch('http://54.163.41.212:5000/predict', {
+    //     method: 'POST',
+    //     body: formData,
+    // });
+    // const data = await response.json();
+    // res.json(data);
+    // res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
 
 // GET register route to view register form
