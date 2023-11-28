@@ -8,6 +8,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local').Strategy;
+const fetch = require('node-fetch');
+const fs = require('fs');
+const FormData = require('form-data');
 
 const app = express();
 app.use(express.json());
@@ -15,14 +18,7 @@ app.use(express.json());
 const db_URI = process.env.MONGODB_URI;
 mongoose.connect(db_URI);
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'images')
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + path.extname(file.originalname))
-    }
-});
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Functionality to support HTML pages to test the program
@@ -43,12 +39,25 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 // GET home route, must be logged in to view
 app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user.name, uploadedImage: false});
 });
 
-app.post('/', checkAuthenticated, upload.single('image'), (req, res) => {
+// POST home route to save an user-uploaded image
+app.post('/', checkAuthenticated, upload.single('image'), async (req, res) => {
+    const formData = new FormData();
+    formData.append('file', req.file.buffer, {
+        filename: req.file.originalname,
+        contentType: req.file.mimetype
+    });
+    const response = await fetch('http://54.163.41.212:5000/predict', {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    console.log(data.prediction);
     res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
 
