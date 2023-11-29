@@ -187,11 +187,11 @@ function runDetection() {
     //It actually uses /demo/handtrack.min.js, which is contents off /src/index.js and a bunch of other files, compressed
     //So, when u want to change /src/index.js, actually change /demo/handtrack.min.js
 
-    // setTimeout(function() { //wait 500ms - this is hacky, please remove later
+    setTimeout(function() { //wait 500ms - this is hacky, please remove later
       if (isVideo) {
         requestAnimationFrame(runDetection);    //some kind of recursive call
       }
-    // }, 1000);
+    }, 1000);
   });
 }
 

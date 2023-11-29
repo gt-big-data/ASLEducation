@@ -42,11 +42,11 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static(path.join(__dirname, './frontend/demo')));
 
-const limiter = rateLimit({
-    windowMs: 1000, // 1000ms (1 second) window
-    max: 1, // Max 1 request per windowMs
-    message: 'Too many requests from this IP, please try again later.',
-});
+// const limiter = rateLimit({
+//     windowMs: 1000, // 1000ms (1 second) window
+//     max: 1, // Max 1 request per windowMs
+//     message: 'Too many requests from this IP, please try again later.',
+// });
 
 // GET home route, must be logged in to view
 app.get('/', checkAuthenticated, (req, res) => {
@@ -55,24 +55,22 @@ app.get('/', checkAuthenticated, (req, res) => {
 });
 
 // POST home route to save an user-uploaded image
-app.post('/', limiter, upload.single('file'), async (req, res) => {
-    // const formData = new FormData();
-    // formData.append('file', req.file.buffer, {
-    //     filename: req.file.originalname,
-    //     contentType: req.file.mimetype
-    // });
+app.post('/', upload.single('file'), async (req, res) => {
+    const formData = new FormData();
+    formData.append('file', req.file.buffer, {
+        filename: req.file.originalname,
+        contentType: req.file.mimetype
+    });
 
-    // const response = await fetch('http://54.163.41.212:5000/predict', {
-    //     method: 'POST',
-    //     body: formData,
-    // });
+    const response = await fetch('http://54.163.41.212:5000/predict', {
+        method: 'POST',
+        body: formData,
+    });
 
-    // const data = await response.json();
-    // console.log(data);
-    // res.json({ prediction : data.prediction })
-    // // res.render('index.ejs', { name: req.user.name, uploadedImage: true});
-
-    res.json({ prediction : "3" })
+    const data = await response.json();
+    console.log(data);
+    res.json({ prediction : data.prediction })
+    //res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
 
 // GET register route to view register form
