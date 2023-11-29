@@ -1,7 +1,9 @@
 const video = document.getElementById("myvideo");
 const handimg = document.getElementById("handimage");
 const canvas = document.getElementById("canvas");
+const canvas2 = document.getElementById("canvas2");
 const context = canvas.getContext("2d");
+const context2 = canvas2.getContext("2d");
 let trackButton = document.getElementById("trackbutton");
 let nextImageButton = document.getElementById("nextimagebutton");
 let updateNote = document.getElementById("updatenote");
@@ -107,7 +109,7 @@ var ctr = 0;
 //This function infinitely loops (calls itself)
 function runDetection() {
   model.detect(video).then(async (predictions) => {
-    //console.log("Predictions: ", predictions);
+    console.log("Predictions 1: ", predictions);
     var removeInd = -1;
     for (var i = 0; i < predictions.length; i++) {
       if (predictions[i].class == 5) {
@@ -127,19 +129,19 @@ function runDetection() {
 
       var pred = predictions[0];
       var boxCoords = pred.bbox;    //format: [left edge, top edge, width, height]
-      console.log(boxCoords)
+      //console.log(boxCoords)
 
       
       var dataURL = canvas.toDataURL('image/jpeg');
-      console.log(dataURL);
+      //console.log(dataURL);
       
       
-      canvas.width = boxCoords[2];
-      canvas.height = boxCoords[3];
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.scale(-1, 1);   //do if horizontal flip is in model params
-      context.translate(-boxCoords[2], 0);  //do if horizontal flip is in params
-      context.drawImage(video,
+      canvas2.width = boxCoords[2];
+      canvas2.height = boxCoords[3];
+      context2.clearRect(0, 0, canvas2.width, canvas2.height);
+      context2.scale(-1, 1);   //do if horizontal flip is in model params
+      context2.translate(-boxCoords[2], 0);  //do if horizontal flip is in params
+      context2.drawImage(video,
         video.width - boxCoords[2] - boxCoords[0], boxCoords[1],   // Start at N pixels from the left and the top of the image (crop),
         boxCoords[2], boxCoords[3],   // "Get" a (w * h) area from the source image (crop),
         0, 0,     // Place the result at 0, 0 in the canvas,
@@ -150,7 +152,7 @@ function runDetection() {
       //   0, 0,     // Place the result at 0, 0 in the canvas,
       //   boxCoords[2], boxCoords[3]); // With as width / height: 160 * 60 (scale)  
       
-      dataURL = canvas.toDataURL('image/jpeg');
+      dataURL = canvas2.toDataURL('image/jpeg');
 
       var blob = dataURLtoBlob2(dataURL);
       // var urlCreator = window.URL || window.webkitURL; 
