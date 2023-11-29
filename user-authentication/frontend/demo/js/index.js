@@ -106,7 +106,7 @@ function blobToDataURL(blob, callback) {
 var ctr = 0;
 //This function infinitely loops (calls itself)
 function runDetection() {
-  model.detect(video).then((predictions) => {
+  model.detect(video).then(async (predictions) => {
     //console.log("Predictions: ", predictions);
     var removeInd = -1;
     for (var i = 0; i < predictions.length; i++) {
@@ -156,24 +156,26 @@ function runDetection() {
       // var urlCreator = window.URL || window.webkitURL; 
       // var imageUrl = urlCreator.createObjectURL(blob); 
 
-      blobToDataURL(blob, function(dataurl){
-        console.log(dataurl);
-      });
+      // blobToDataURL(blob, function(dataurl){
+      //   console.log(dataurl);
+      // });
+
+      console.log(blob);
 
       async function sendBlob(blob) {
-        // const formData = FormData();
-        // formData.append('file', blob);
-
+        const formData = new FormData();
+        formData.append('file', blob);
         const response = await fetch('/', {
           method: 'POST',
-          body: blob
+          body: formData
         });
 
         const data = await response.json();
+        console.log(data.prediction);
         return data.prediction;
-      }
+      } 
 
-      predictedLetter = sendBlob(blob);
+      predictedLetter = await sendBlob(blob);
     }
     
     //The following function sits in /src/index.js but any changes there do not reflect on the front end
@@ -181,11 +183,11 @@ function runDetection() {
     //So, when u want to change /src/index.js, actually change /demo/handtrack.min.js
     model.renderPredictions(predictions, canvas, context, video, predictedLetter); //draws prediction - bounding box and label
 
-    // setTimeout(function() { //wait 500ms - this is hacky, please remove later
+    setTimeout(function() { //wait 500ms - this is hacky, please remove later
       if (isVideo) {
         requestAnimationFrame(runDetection);    //some kind of recursive call
       }
-    // }, 200);
+    }, 1000);
   });
 }
 

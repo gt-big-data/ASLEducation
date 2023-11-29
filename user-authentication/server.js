@@ -3,7 +3,7 @@ const express = require('express');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-// const multer = require('multer');
+const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/user');
@@ -18,8 +18,8 @@ app.use(express.json());
 const db_URI = process.env.MONGODB_URI;
 mongoose.connect(db_URI);
 
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Functionality to support HTML pages to test the program
 app.set('view-engine', 'ejs');
@@ -48,22 +48,21 @@ app.get('/', checkAuthenticated, (req, res) => {
 });
 
 // POST home route to save an user-uploaded image
-app.post('/', async (req, res) => {
-    console.log(req.body);
-    // const formData = new FormData();
-    // // formData.append('file', req.file.buffer, {
-    // //     filename: req.file.originalname,
-    // //     contentType: req.file.mimetype
-    // // });
+app.post('/', upload.single('file'), async (req, res) => {
+    const formData = new FormData();
+    formData.append('file', req.file.buffer, {
+        filename: req.file.originalname,
+        contentType: req.file.mimetype
+    });
 
-    // formData.append('file', req.body.blob)
+    const response = await fetch('http://54.163.41.212:5000/predict', {
+        method: 'POST',
+        body: formData,
+    });
 
-    // const response = await fetch('http://54.163.41.212:5000/predict', {
-    //     method: 'POST',
-    //     body: formData,
-    // });
-    // const data = await response.json();
-    // res.json(data);
+    const data = await response.json();
+    console.log(data);
+    res.json({ prediction : data.prediction })
     // res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
 
