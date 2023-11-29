@@ -109,7 +109,7 @@ var ctr = 0;
 //This function infinitely loops (calls itself)
 function runDetection() {
   model.detect(video).then(async (predictions) => {
-    console.log("Predictions 1: ", predictions);
+    //console.log("Predictions 1: ", predictions);
     var removeInd = -1;
     for (var i = 0; i < predictions.length; i++) {
       if (predictions[i].class == 5) {
@@ -120,10 +120,9 @@ function runDetection() {
     if (removeInd > -1) {
       predictions.splice(removeInd, 1);
     }
-    console.log("Predictions: ", predictions);
+    //console.log("Predictions: ", predictions);
 
     var predictedLetter = "";
-    model.renderPredictions(predictions, canvas, context, video, predictedLetter); //draws prediction - bounding box and label
 
     if (predictions.length > 0) {
       //Predictions are ordered by score (highest confidence to lowest)
@@ -154,15 +153,15 @@ function runDetection() {
       //   boxCoords[2], boxCoords[3]); // With as width / height: 160 * 60 (scale)  
       
       dataURL = canvas2.toDataURL('image/jpeg');
-      console.log(dataURL);
+      //console.log(dataURL);
 
       var blob = dataURLtoBlob2(dataURL);
       // var urlCreator = window.URL || window.webkitURL; 
       // var imageUrl = urlCreator.createObjectURL(blob); 
 
-      blobToDataURL(blob, function(dataurl){
-        console.log(dataurl);
-      });
+      // blobToDataURL(blob, function(dataurl){
+      //   console.log(dataurl);
+      // });
 
       console.log(blob);
 
@@ -186,6 +185,8 @@ function runDetection() {
     //The following function sits in /src/index.js but any changes there do not reflect on the front end
     //It actually uses /demo/handtrack.min.js, which is contents off /src/index.js and a bunch of other files, compressed
     //So, when u want to change /src/index.js, actually change /demo/handtrack.min.js
+
+    model.renderPredictions(predictions, canvas, context, video, predictedLetter); //draws prediction - bounding box and label
 
     setTimeout(function() { //wait 500ms - this is hacky, please remove later
       if (isVideo) {

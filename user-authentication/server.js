@@ -62,13 +62,13 @@ app.post('/', upload.single('file'), async (req, res) => {
         contentType: req.file.mimetype
     });
 
-    const response = await fetch('http://54.163.41.212:5000/predict', {
+    const response = await fetch('http://54.82.1.98:5000/predict', {
         method: 'POST',
         body: formData,
     });
 
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     res.json({ prediction : data.prediction })
     //res.render('index.ejs', { name: req.user.name, uploadedImage: true});
 });
