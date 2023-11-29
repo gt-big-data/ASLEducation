@@ -390,7 +390,7 @@ export class ObjectDetection {
       context,
       10,
       10,
-      this.modelParams.fontSize * 4.6,
+      this.modelParams.fontSize * 6.6,
       this.modelParams.fontSize + 8,
       5,
       true,

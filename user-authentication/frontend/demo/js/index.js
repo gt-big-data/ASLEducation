@@ -123,6 +123,7 @@ function runDetection() {
     console.log("Predictions: ", predictions);
 
     var predictedLetter = "";
+    model.renderPredictions(predictions, canvas, context, video, predictedLetter); //draws prediction - bounding box and label
 
     if (predictions.length > 0) {
       //Predictions are ordered by score (highest confidence to lowest)
@@ -136,8 +137,8 @@ function runDetection() {
       //console.log(dataURL);
       
       
-      canvas2.width = boxCoords[2];
-      canvas2.height = boxCoords[3];
+      context2.canvas.width = boxCoords[2];
+      context2.canvas.height = boxCoords[3];
       context2.clearRect(0, 0, canvas2.width, canvas2.height);
       context2.scale(-1, 1);   //do if horizontal flip is in model params
       context2.translate(-boxCoords[2], 0);  //do if horizontal flip is in params
@@ -153,20 +154,22 @@ function runDetection() {
       //   boxCoords[2], boxCoords[3]); // With as width / height: 160 * 60 (scale)  
       
       dataURL = canvas2.toDataURL('image/jpeg');
+      console.log(dataURL);
 
       var blob = dataURLtoBlob2(dataURL);
       // var urlCreator = window.URL || window.webkitURL; 
       // var imageUrl = urlCreator.createObjectURL(blob); 
 
-      // blobToDataURL(blob, function(dataurl){
-      //   console.log(dataurl);
-      // });
+      blobToDataURL(blob, function(dataurl){
+        console.log(dataurl);
+      });
 
       console.log(blob);
 
       async function sendBlob(blob) {
         const formData = new FormData();
         formData.append('file', blob);
+        
         const response = await fetch('/', {
           method: 'POST',
           body: formData
@@ -183,13 +186,12 @@ function runDetection() {
     //The following function sits in /src/index.js but any changes there do not reflect on the front end
     //It actually uses /demo/handtrack.min.js, which is contents off /src/index.js and a bunch of other files, compressed
     //So, when u want to change /src/index.js, actually change /demo/handtrack.min.js
-    model.renderPredictions(predictions, canvas, context, video, predictedLetter); //draws prediction - bounding box and label
 
-    setTimeout(function() { //wait 500ms - this is hacky, please remove later
+    // setTimeout(function() { //wait 500ms - this is hacky, please remove later
       if (isVideo) {
         requestAnimationFrame(runDetection);    //some kind of recursive call
       }
-    }, 1000);
+    // }, 1000);
   });
 }
 
