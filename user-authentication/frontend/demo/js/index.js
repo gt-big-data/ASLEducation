@@ -109,10 +109,10 @@ var ctr = 0;
 //This function infinitely loops (calls itself)
 function runDetection() {
   model.detect(video).then(async (predictions) => {
-    //console.log("Predictions 1: ", predictions);
+    console.log("Predictions 1: ", predictions);
     var removeInd = -1;
     for (var i = 0; i < predictions.length; i++) {
-      if (predictions[i].class == 5) {
+      if (predictions[i].label == "face") {
         removeInd = i;
         break;
       }

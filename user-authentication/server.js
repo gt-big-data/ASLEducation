@@ -62,7 +62,7 @@ app.post('/', upload.single('file'), async (req, res) => {
         contentType: req.file.mimetype
     });
 
-    const response = await fetch('http://54.82.1.98:5000/predict', {
+    const response = await fetch('http://54.196.213.147:5000/predict', {
         method: 'POST',
         body: formData,
     });
